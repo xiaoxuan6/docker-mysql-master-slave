@@ -177,3 +177,16 @@ Master_SSL_Verify_Server_Cert: No
 ## 1、ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
 
 解决方法：删除 `/var/run/mysqld/mysqld.sock`,重启容器
+
+## 2、mysql: [Warning] World-writable config file '/etc/mysql/conf.d/mysql.cnf' is ignored.
+
+解决方法：`chmod 644 mysql.cnf`
+
+## 3、为什么 `mysql.cnf` 不使用 `docker` 数据卷 `volumes` 挂载？
+
+```bash
+volumes:
+  - ./master/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+```
+
+原因：使用数据卷挂载之后会报错上面的问题二
