@@ -1,0 +1,26 @@
+version: '3.6'
+services:
+  mysql-master:
+    container_name: mysql-master
+    image: mysql:5.7.40-master
+    build:
+      context: ./master
+    restart: on-failure
+    ports:
+      - 3306:3306
+    environment:
+      TZ: "${MASTER_MYSQL_TZ}"
+      MYSQL_ROOT_USER: "${MASTER_MYSQL_ROOT_USER}"
+      MYSQL_ROOT_PASSWORD: "${MASTER_MYSQL_ROOT_PASSWORD}"
+  mysql-slave:
+    container_name: mysql-slave
+    image: mysql:5.7.40-slave
+    build:
+      context: ./slave
+    restart: on-failure
+    ports:
+      - 3307:3306
+    environment:
+      TZ: "${SLAVE_MYSQL_TZ}"
+      MYSQL_ROOT_USER: "${SLAVE_MYSQL_ROOT_USER}"
+      MYSQL_ROOT_PASSWORD: "${SLAVE_MYSQL_ROOT_PASSWORD}"
