@@ -172,6 +172,63 @@ Master_SSL_Verify_Server_Cert: No
 
 </details>
 
+# 验证主从同步
+
+<details>
+<summary><b>master</b></summary>
+
+进入 master 容器的 MySQL 命令行，执行以下四个命令，完成创建数据库、选择数据库、创建表、新增记录等操作
+
+```bash
+create database test001;
+
+use test001;
+
+CREATE TABLE `test_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into test_table(name) values ('docker');
+```
+
+</details>
+
+<details>
+<summary><b>slave</b></summary>
+
+进入 slave 容器的 MySQL 命令行，选择 test001 数据库，可以看到表 test_table 和记录都已经同步过来了
+
+```bash
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test001            |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use test001;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from test_table;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | docker |
++----+-------+
+1 row in set (0.00 sec)
+```
+
+</details>
+
 # 遇到的问题
 
 ## 1、ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
