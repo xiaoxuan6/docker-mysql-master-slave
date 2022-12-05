@@ -87,8 +87,11 @@ Query OK, 0 rows affected, 2 warnings (0.78 sec)
 ```
 
 > MASTER_HOST 是 master 的IP地址；
+> 
 > MASTER_USER 和 MASTER_PASSWORD 是 master 授权的同步账号和密码；
-> MASTER_LOG_FILE 是 master 的 bin log 文件名；
+> 
+>MASTER_LOG_FILE 是 master 的 bin log 文件名；
+> 
 > MASTER_LOG_POS 是 bin log 同步的位置；
 
 ### 3、在MySQL命令行执行 `start slave`;启动同步
